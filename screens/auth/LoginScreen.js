@@ -51,60 +51,67 @@ const LoginScreen = ({ navigation }) => {
 
   //method to validate the user credentials and navigate to Home Screen / Dashboard
   const loginHandle = () => {
-    setIsloading(true);
-    //[check validation] -- Start
-    // if email does not contain @ sign
-    if (email == "") {
-      setIsloading(false);
-      return setError("Please enter your email");
-    }
-    if (password == "") {
-      setIsloading(false);
-      return setError("Please enter your password");
-    }
-    if (!email.includes("@")) {
-      setIsloading(false);
-      return setError("Email is not valid");
-    }
-    // length of email must be greater than 5 characters
-    if (email.length < 6) {
-      setIsloading(false);
-      return setError("Email is too short");
-    }
-    // length of password must be greater than 5 characters
-    if (password.length < 6) {
-      setIsloading(false);
-      return setError("Password must be 6 characters long");
-    }
-    //[check validation] -- End
+    _storeData({name:"prathamesh"})
+  }
+  // const loginHandle = () => {
+  //   console.log("hello")
+    
+  //   setIsloading(true);
+  //   //[check validation] -- Start
+  //   // if email does not contain @ sign
+  //   if (email == "") {
+  //     setIsloading(false);
+  //     return setError("Please enter your email");
+  //   }
+  //   if (password == "") {
+  //     setIsloading(false);
+  //     return setError("Please enter your password");
+  //   }
+  //   if (!email.includes("@")) {
+  //     setIsloading(false);
+  //     return setError("Email is not valid");
+  //   }
+  //   // length of email must be greater than 5 characters
+  //   if (email.length < 6) {
+  //     setIsloading(false);
+  //     return setError("Email is too short");
+  //   }
+  //   // length of password must be greater than 5 characters
+  //   if (password.length < 6) {
+  //     setIsloading(false);
+  //     return setError("Password must be 6 characters long");
+  //   }
+  //   //[check validation] -- End
+  //   _storeData({"name":"Prathamesh"})
+  //   setIsloading(false);
 
-    fetch(network.serverip + "/login", requestOptions) // API call
-      .then((response) => response.json())
-      .then((result) => {
-        if (
-          result.status == 200 ||
-          (result.status == 1 && result.success != false)
-        ) {
-          if (result?.data?.userType == "ADMIN") {
-            //check the user type if the type is ADMIN then navigate to Dashboard else navigate to User Home
-            _storeData(result.data);
-            setIsloading(false);
-            navigation.replace("dashboard", { authUser: result.data }); // naviagte to Admin Dashboard
-          } else {
-            _storeData(result.data);
-            setIsloading(false);
-            navigation.replace("tab", { user: result.data }); // naviagte to User Dashboard
-          }
-        } else {
-          setIsloading(false);
-          return setError(result.message);
-        }
-      })
-      .catch((error) => {
-        setIsloading(false);
-        console.log("error", setError(error.message));
-      });
-  };
+  //   // fetch(network.serverip + "/login", requestOptions) // API call
+  //   //   .then((response) => response.json())
+  //   //   .then((result) => {
+  //   //     if (
+  //   //       result.status == 200 ||
+  //   //       (result.status == 1 && result.success != false)
+  //   //     ) {
+  //   //       if (result?.data?.userType == "ADMIN") {
+  //   //         //check the user type if the type is ADMIN then navigate to Dashboard else navigate to User Home
+  //   //         _storeData(result.data);
+  //   //         setIsloading(false);
+  //   //         navigation.replace("dashboard", { authUser: result.data }); // naviagte to Admin Dashboard
+  //   //       } else {
+  //   //         _storeData(result.data);
+  //   //         setIsloading(false);
+  //   //         navigation.replace("tab", { user: result.data }); // naviagte to User Dashboard
+  //   //       }
+  //   //     } else {
+  //   //       setIsloading(false);
+  //   //       return setError(result.message);
+  //   //     }
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     setIsloading(false);
+  //   //     console.log("error", setError(error.message));
+  //   //   });
+  // };
 
   return (
     <InternetConnectionAlert onChange={(connectionState) => {}}>
